@@ -4,7 +4,7 @@ You can use this file if you want include your flexbox with all(3) syntaxes.
 
 This file can better your life!
 
-# How To Use?
+# How To Use This File?
 For example if you want write: 
 ```
 display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
