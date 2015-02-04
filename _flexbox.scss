@@ -1,27 +1,35 @@
 /* The Best Support For Flexbox Layout Module */
 
 // display: flex
-@mixin display-flex() {
-	@extend  %display-flex;
+@mixin display-flex($extend: true) {
+	@if $extend == false{
+		display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+		display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+		display: -ms-flexbox;      /* TWEENER - IE 10 */
+		display: -webkit-flex;     /* NEW - Chrome */
+		display: flex; 
+	} @else{
+		@extend  %display-flex;
+	}
 }
 %display-flex{
-	display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-	display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
-	display: -ms-flexbox;      /* TWEENER - IE 10 */
-	display: -webkit-flex;     /* NEW - Chrome */
-	display: flex; 
+	@include display-flex(false);
 }
 
 // display: inline-flex
-@mixin display-inline-flex() {
-	@extend  %display-inline-flex;
+@mixin display-inline-flex($extend: true) {
+	@if $extend == true{
+		@extend %display-inline-flex;
+	} @else{
+		display:-webkit-inline-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+		display:-moz-inline-box;		 /* OLD - Firefox 19- (buggy but mostly works) */
+		display:-ms-inline-flexbox;	 	 /* TWEENER - IE 10 */
+		display:-webkit-inline-flex;	 /* NEW - Chrome */
+		display:inline-flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+	}
 }
 %display-inline-flex{
-	display:-webkit-inline-box;      /* OLD - iOS 6-, Safari 3.1-6 */
-	display:-moz-inline-box;		 /* OLD - Firefox 19- (buggy but mostly works) */
-	display:-ms-inline-flexbox;	 	 /* TWEENER - IE 10 */
-	display:-webkit-inline-flex;	 /* NEW - Chrome */
-	display:inline-flex;             /* NEW, Spec - Opera 12.1, Firefox 20+ */
+	@include display-inline-flex(false);
 }
 
 //Flex
@@ -44,135 +52,175 @@
 
 // JUSTIFY CONTENT METHODS
 // justify-content: [flex-]start;
-@mixin justify-content-start() {
-	@extend  %justify-content-start;
+@mixin justify-content-start($extend: true) {
+	@if $extend == true{
+		@extend %justify-content-start;
+	} @else{
+		-webkit-box-pack: start; 
+		-moz-box-pack: start;
+		-ms-flex-pack: start;
+		-webkit-justify-content: flex-start;
+		justify-content: flex-start;
+	}
 }
 %justify-content-start{
-	-webkit-box-pack: start; 
-	-moz-box-pack: start;
-	-ms-flex-pack: start;
-	-webkit-justify-content: flex-start;
-	justify-content: flex-start;
+	@include justify-content-start(false);
 }
 
 // justify content center (main axis centering)
-@mixin justify-content-center() {
-	@extend  %justify-content-center;
+@mixin justify-content-center($extend: true) {
+	@if $extend == true{
+		@extend %justify-content-center;
+	} @else{
+		-webkit-box-pack: center; 
+		-moz-box-pack: center;
+		-ms-flex-pack: center;
+		-webkit-justify-content: center;
+		justify-content: center;		
+	}
 }
 %justify-content-center{
-	-webkit-box-pack: center; 
-	-moz-box-pack: center;
-	-ms-flex-pack: center;
-	-webkit-justify-content: center;
-	justify-content: center;
+	@include justify-content-center(false);
 }
 
 // justify-content: [flex-]end;
-@mixin justify-content-end() {
-	@extend  %justify-content-end;
+@mixin justify-content-end($extend: true) {
+	@if $extend == true{
+		@extend %justify-content-end;
+	} @else{
+		-webkit-box-pack: end; 
+		-moz-box-pack: end;
+		-ms-flex-pack: end;
+		-webkit-justify-content: flex-end;
+		justify-content: flex-end;
+	}
 }
 %justify-content-end{
-	-webkit-box-pack: end; 
-	-moz-box-pack: end;
-	-ms-flex-pack: end;
-	-webkit-justify-content: flex-end;
-	justify-content: flex-end;
+
 }
 
 // justify-content: space-between;
 // distributes the space between but not before or after the elements
-@mixin justify-content-space-between() {
-	@extend  %justify-content-space-between;
+@mixin justify-content-space-between($extend: true) {
+	@if $extend == true{
+		@extend %justify-content-space-between;
+	} @else{
+		-webkit-box-pack: justify; 
+		-moz-box-pack: justify;
+		-ms-flex-pack: justify;
+		-webkit-justify-content: space-between;
+		justify-content: space-between;
+	}
 }
 %justify-content-space-between{
-	-webkit-box-pack: justify; 
-	-moz-box-pack: justify;
-	-ms-flex-pack: justify;
-	-webkit-justify-content: space-between;
-	justify-content: space-between;
+	@include justify-content-space-between(false);
 }
 
 // justify-content: space-around;
 // distributes the space around the elements
-@mixin justify-content-space-around() {
-	@extend  %justify-content-space-around;
+@mixin justify-content-space-around($extend: true) {
+	@if $extend == true{
+		@extend %justify-content-space-around;
+	} @else{
+		-webkit-box-pack: justify; 	/* The old syntax does not support space-around, so this falls back to space-between */
+		-moz-box-pack: justify;		/* The old syntax does not support space-around, so this falls back to space-between */
+		-ms-flex-pack: distribute;
+		-webkit-justify-content: space-around;
+		justify-content: space-around;
+	}
 }
 %justify-content-space-around{
-	-webkit-box-pack: justify; 	/* The old syntax does not support space-around, so this falls back to space-between */
-	-moz-box-pack: justify;		/* The old syntax does not support space-around, so this falls back to space-between */
-	-ms-flex-pack: distribute;
-	-webkit-justify-content: space-around;
-	justify-content: space-around;
+	@include justify-content-space-around(false);
 }
 
 
 // ALIGN ITEMS METHODS
 // Align items aligns elements on the cross axis
 // align-items: [flex-]start
-@mixin align-items-start () {
-	@extend  %align-items-start;
+@mixin align-items-start ($extend: true) {
+	@if $extend == true{
+		@extend %align-items-start ;
+	} @else{
+		-webkit-box-align: start; 
+		-moz-box-align: start; 
+		-ms-flex-align: start; 
+		-webkit-align-items: flex-start;
+		-moz-align-items: flex-start;
+		align-items: flex-start;
+	}
 }
 %align-items-start{
-	-webkit-box-align: start; 
-	-moz-box-align: start; 
-	-ms-flex-align: start; 
-	-webkit-align-items: flex-start;
-	-moz-align-items: flex-start;
-	align-items: flex-start;
+	@include align-items-start (false);
 }
 
 // align-items: center
-@mixin align-items-center() {
-	@extend  %align-items-center;
+@mixin align-items-center($extend: true) {
+	@if $extend == true{
+		@extend %align-items-center;
+	} @else{
+		-webkit-box-align: center; 
+		-moz-box-align: center; 
+		-ms-flex-align: center; 
+		-webkit-align-items: center;
+		-moz-align-items: center;
+		align-items: center;
+	}
 }
 %align-items-center{
-	-webkit-box-align: center; 
-	-moz-box-align: center; 
-	-ms-flex-align: center; 
-	-webkit-align-items: center;
-	-moz-align-items: center;
-	align-items: center;
+	@include align-items-center(false);
 }
 
 // align-items: [flex-]end
-@mixin align-items-end(){
-	@extend  %align-items-end;
+@mixin align-items-end($extend: true){
+	@if $extend == true{
+		@extend %align-items-end;
+	}@else{
+		-webkit-box-align: end; 
+		-moz-box-align: end; 
+		-ms-flex-align: end; 
+		-webkit-align-items: flex-end;
+		-moz-align-items: flex-end;
+		align-items: flex-end;		
+	}
 }
 %align-items-end{
-	-webkit-box-align: end; 
-	-moz-box-align: end; 
-	-ms-flex-align: end; 
-	-webkit-align-items: flex-end;
-	-moz-align-items: flex-end;
-	align-items: flex-end;
+	@include align-items-end(false);
 }
 
 // align-items: baseline
 // If the flex item's inline axis is the same as the cross axis, this value is identical to 'flex-start'. Otherwise, it participates in baseline alignment: all participating flex items on the line are aligned such that their baselines align, and the item with the largest distance between its baseline and its cross-start margin edge is placed flush against the cross-start edge of the line.
-@mixin align-items-baseline(){
-	@extend  %align-items-baseline;
-}
-%align-items-end{
+@mixin align-items-baseline($extend: true){
+	@if $extend == true{
+		@extend %align-items-baseline;
+	}@else{
 	-webkit-box-align: baseline; 
 	-moz-box-align: baseline; 
 	-ms-flex-align: baseline; 
 	-webkit-align-items: baseline;
 	-moz-align-items: baseline;
-	align-items: baseline;
+	align-items: baseline;		
+	}
+}
+%align-items-end{
+	@include align-items-baseline(false);
 }
 
 // align-items: stretch
 // Flex items are stretched such as the cross-size of the item's margin box is the same as the line while respecting width and height constraints.
-@mixin align-items-stretch(){
-	@extend  %align-items-stretch;
+@mixin align-items-stretch($extend: true){
+	@if $extend == true{
+		@extend %align-items-stretch;
+	}@else{
+		-webkit-box-align: stretch; 
+		-moz-box-align: stretch; 
+		-ms-flex-align: stretch; 
+		-webkit-align-items: stretch;
+		-moz-align-items: stretch;
+		align-items: stretch;		
+	}
 }
 %align-items-stretch{
-	-webkit-box-align: stretch; 
-	-moz-box-align: stretch; 
-	-ms-flex-align: stretch; 
-	-webkit-align-items: stretch;
-	-moz-align-items: stretch;
-	align-items: stretch;
+	@include align-items-stretch(false);
 }
 
 // ALIGN SELF METHODS
@@ -180,67 +228,91 @@
 // Align-self: Individual cross-axis alignment. Override to align individual items along the cross-axis
 
 // align-self:auto
-@mixin align-self-auto(){
-	@extend  %align-self-auto;
+@mixin align-self-auto($extend: true){
+	@if $extend == true{
+		@extend %align-self-auto;
+	}@else{
+		-ms-flex-item-align: auto; 
+		-webkit-align-self: auto;
+		-moz-align-self: auto;
+		align-self: auto;		
+	}
 }
 %align-self-auto{
-	-ms-flex-item-align: auto; 
-	-webkit-align-self: auto;
-	-moz-align-self: auto;
-	align-self: auto;
+	@include align-self-auto(false);
 }
 
 // align-self:start
-@mixin align-self-start(){
-	@extend  %align-self-start;
+@mixin align-self-start($extend: true){
+	@if $extend == true{
+		@extend %align-self-start;
+	}@else{
+		-ms-flex-item-align: start; 
+		-webkit-align-self: flex-start;
+		-moz-align-self: flex-start;
+		align-self: flex-start;		
+	}
 }
 %align-self-start{
-	-ms-flex-item-align: start; 
-	-webkit-align-self: flex-start;
-	-moz-align-self: flex-start;
-	align-self: flex-start;
+	@include align-self-start(false);
 }
 
 // align-self:center
-@mixin align-self-center(){
-	@extend  %align-self-center;
+@mixin align-self-center($extend: true){
+	@if $extend == true{
+		@extend %align-self-center;
+	}@else{
+		-ms-flex-item-align: center; 
+		-webkit-align-self: center;
+		-moz-align-self: center;
+		align-self: center;		
+	}
 }%align-self-center{
-	-ms-flex-item-align: center; 
-	-webkit-align-self: center;
-	-moz-align-self: center;
-	align-self: center;
+	@include align-self-center(false);
 }
 
 
 // align-self:end
-@mixin align-self-end(){
-	@extend  %align-self-end;
+@mixin align-self-end($extend: true){
+	@if $extend == true{
+		@extend %align-self-end;
+	}@else{
+		-ms-flex-item-align: end; 
+		-webkit-align-self: flex-end;
+		-moz-align-self: flex-end;
+		align-self: flex-end;		
+	}
 }%align-self-end{
-	-ms-flex-item-align: end; 
-	-webkit-align-self: flex-end;
-	-moz-align-self: flex-end;
-	align-self: flex-end;
+	@include align-self-end(false);
 }
 
 
 // align-self:baseline
-@mixin align-self-baseline(){
-	@extend  %align-self-baseline;
+@mixin align-self-baseline($extend: true){
+	@if $extend == true{
+		@extend %align-self-baseline;
+	}@else{
+		-ms-flex-item-align: baseline;
+		-webkit-align-self: baseline;
+		-moz-align-self: baseline;
+		align-self: baseline;		
+	}
 }%align-self-baseline{
-	-ms-flex-item-align: baseline;
-	-webkit-align-self: baseline;
-	-moz-align-self: baseline;
-	align-self: baseline;
+	@include align-self-baseline(false);
 }
 
 // align-self:stretch
-@mixin align-self-stretch(){
-	@extend  %align-self-stretch;
+@mixin align-self-stretch($extend: true){
+	@if $extend == true{
+		@extend %align-self-stretch;
+	}@else{
+		-ms-flex-item-align: stretch;
+		-webkit-align-self: stretch;
+		-moz-align-self: stretch;
+		align-self: stretch;		
+	}
 }%align-self-stretch{
-	-ms-flex-item-align: stretch;
-	-webkit-align-self: stretch;
-	-moz-align-self: stretch;
-	align-self: stretch;
+	@include align-self-stretch(false);
 }
 
 
@@ -250,63 +322,87 @@
 
 
 // align-content: start
-@mixin align-content-start(){
-	@extend  %align-content-start;
+@mixin align-content-start($extend: true){
+	@if $extend == true{
+		@extend %align-content-start;
+	}@else{
+		-ms-flex-line-pack: start; 
+		-webkit-align-content: flex-start;
+		-moz-align-content: flex-start;
+		align-content: flex-start;		
+	}
 }%align-content-start{
-	-ms-flex-line-pack: start; 
-	-webkit-align-content: flex-start;
-	-moz-align-content: flex-start;
-	align-content: flex-start;
+	@include align-content-start(false);
 }
 
 // align-content: center
-@mixin align-content-center(){
-	@extend  %align-content-center;
+@mixin align-content-center($extend: true){
+	@if $extend == true{
+		@extend %align-content-center;
+	}@else{
+		-ms-flex-line-pack: center; 
+		-webkit-align-content: center;
+		-moz-align-content: center;
+		align-content: center;		
+	}
 }%align-content-center{
-	-ms-flex-line-pack: center; 
-	-webkit-align-content: center;
-	-moz-align-content: center;
-	align-content: center;
+	@include align-content-center(false);
 }
 
 // align-content: end
-@mixin align-content-end(){
-	@extend  %align-content-end;
+@mixin align-content-end($extend: true){
+	@if $extend == true{
+		@extend %align-content-end;
+	}@else{
+		-ms-flex-line-pack: end; 
+		-webkit-align-content: flex-end;
+		-moz-align-content: flex-end;
+		align-content: flex-end;		
+	}
 }%align-content-end{
-	-ms-flex-line-pack: end; 
-	-webkit-align-content: flex-end;
-	-moz-align-content: flex-end;
-	align-content: flex-end;
+	@include align-content-end(false);
 }
 
 // align-content: space-between
-@mixin align-content-space-between(){
-	@extend  %align-content-space-between;
+@mixin align-content-space-between($extend: true){
+	@if $extend == true{
+		@extend %align-content-space-between;
+	}@else{
+		-ms-flex-line-pack: justify; 
+		-webkit-align-content: space-between;
+		-moz-align-content: space-between;
+		align-content: space-between;		
+	}
 }%align-content-space-between{
-	-ms-flex-line-pack: justify; 
-	-webkit-align-content: space-between;
-	-moz-align-content: space-between;
-	align-content: space-between;
+	@include align-content-space-between(false);
 }
 
 // align-content: space-around
-@mixin align-content-space-around(){
-	@extend  %align-content-space-around;
+@mixin align-content-space-around($extend: true){
+	@if $extend == true{
+		@extend %align-content-space-around;
+	}@else{
+		-ms-flex-line-pack: distribute; 
+		-webkit-align-content: space-around;
+		-moz-align-content: space-around;
+		align-content: space-around;		
+	}
 }%align-content-space-around{
-	-ms-flex-line-pack: distribute; 
-	-webkit-align-content: space-around;
-	-moz-align-content: space-around;
-	align-content: space-around;
+	@include align-content-space-around(false);
 }
 
 // align-content: stretch
-@mixin align-content-stretch(){
-	@extend  %align-content-stretch;
+@mixin align-content-stretch($extend: true){
+	@if $extend == true{
+		@extend %align-content-stretch;
+	}@else{
+		-ms-flex-line-pack: stretch; 
+		-webkit-align-content: stretch;
+		-moz-align-content: stretch;
+		align-content: stretch;		
+	}
 }%align-content-stretch{
-	-ms-flex-line-pack: stretch; 
-	-webkit-align-content: stretch;
-	-moz-align-content: stretch;
-	align-content: stretch;
+	@include align-content-stretch(false);
 }
 
 
@@ -316,37 +412,53 @@
 // Direction: specifying the direction of the main flexbox axis
 
 
-@mixin flex-direction-row(){
-	@extend  %flex-direction-row;
+@mixin flex-direction-row($extend: true){
+	@if $extend == true{
+		@extend %flex-direction-row;
+	}@else{
+		box-direction: normal;
+	    box-orient: horizontal;
+	    flex-direction: row;		
+	}
 }%flex-direction-row{
-	box-direction: normal;
-    box-orient: horizontal;
-    flex-direction: row;
+	@include flex-direction-row(false);
 }
 
-@mixin flex-direction-row-reverse(){
-	@extend  %flex-direction-row-reverse;
+@mixin flex-direction-row-reverse($extend: true){
+	@if $extend == true{
+		@extend %flex-direction-row-reverse;
+	}@else{
+		box-direction: reverse;
+	    box-orient: horizontal;
+	    flex-direction: row-reverse;		
+	}
 }%flex-direction-row-reverse{
-	box-direction: reverse;
-    box-orient: horizontal;
-    flex-direction: row-reverse;
+	@include flex-direction-row-reverse(false);
 }
 
-@mixin flex-direction-column(){
-	@extend  %flex-direction-column;
+@mixin flex-direction-column($extend: true){
+	@if $extend == true{
+		@extend %flex-direction-column;
+	}@else{
+		box-direction: normal;
+	    box-orient: vertical;
+	    flex-direction: column;		
+	}
 }%flex-direction-column{
-	box-direction: normal;
-    box-orient: vertical;
-    flex-direction: column;
+	@include flex-direction-column(false);
 }
 
 
-@mixin flex-direction-column-reverse(){
-	@extend  %flex-direction-column-reverse;
+@mixin flex-direction-column-reverse($extend: true){
+	@if $extend == true{
+		@extend %flex-direction-column-reverse;
+	}@else{
+		box-direction: reverse;
+	    box-orient: vertical;
+	    flex-direction: column-reverse;		
+	}
 }%flex-direction-column-reverse{
-	box-direction: reverse;
-    box-orient: vertical;
-    flex-direction: column-reverse;
+	@include flex-direction-column-reverse(false);
 }
 
 
@@ -355,23 +467,53 @@
 // Firefox doesn't currently support this syntax
 
 
-@mixin flex-wrap-nowrap(){
-	@extend  %flex-wrap-nowrap;
+@mixin flex-wrap-nowrap($extend: true){
+	@if $extend == true{
+		@extend %flex-wrap-nowrap;
+	}@else{
+		box-lines: single;
+	    flex-wrap: nowrap;		
+	}
 }%flex-wrap-nowrap{
-	box-lines: single;
-    flex-wrap: nowrap;
+	@include flex-wrap-nowrap(false);
 }
 
-@mixin flex-wrap-wrap(){
-	@extend  %flex-wrap-wrap;
+@mixin flex-wrap-wrap($extend: true){
+	@if $extend == true{
+		@extend %flex-wrap-wrap;
+	}@else{
+		box-lines: multiple;
+    	flex-wrap: wrap;	
+	}
 }%flex-wrap-wrap{
-	box-lines: multiple;
-    flex-wrap: wrap;
+	@include flex-wrap-wrap(false);
 }
 
 // 2009 syntax does not support reverse wrapping at this time
-@mixin flex-wrap-wrap-reverse(){
-    @extend  %flex-wrap-wrap-reverse;
+@mixin flex-wrap-wrap-reverse($extend: true){
+    @if $extend == true{
+    	@extend %flex-wrap-wrap-reverse;
+    }@else{
+		flex-wrap: wrap-reverse;		
+	}
 }%flex-wrap-wrap-reverse{
-	flex-wrap: wrap-reverse;
+	@include flex-wrap-wrap-reverse(false);
+}
+
+// flex shrink
+@mixin flex-shrink($value){
+	flex-shrink: $value;
+	-webkit-flex-shrink: $value;
+}
+
+// flex basis
+@mixin flex-basis($value){
+	flex-basis: $value;
+	-webkit-flex-basis: $value;
+}
+
+// flex grow
+@mixin flex-grow($value){
+	flex-grow: $value;
+	-webkit-flex-grow: $value;
 }
